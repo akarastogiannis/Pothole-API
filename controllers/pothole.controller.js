@@ -69,6 +69,7 @@ exports.login = async (req, res) => {
     //         });
     //     });
 
+    // I should rename potentialUser to User
     const potentialUser = await User.findOne({ where: { username: username}})
     if(potentialUser == null) {
         // Username does not exist
@@ -78,7 +79,7 @@ exports.login = async (req, res) => {
     } else {
         // Username does exist
 
-        // Get Registerd User hashedPwd to verify Potential User is Registered User
+        // Get Registerd User hashedPwd from database to verify Potential User is Registered User
         const hashedPwd = potentialUser.hashedPwd;
 
         // Check pwd with hashedPwd
