@@ -47,6 +47,41 @@ exports.create = (req, res) =>  {
         });
 };
 
+exports.login = async (req, res) => {
+     // Validate the req
+     if(!req.body) {
+        res.status(400).send({
+            message: "Content cannot be empty!"
+        });
+        return;
+    }
+
+    const username = req.body.username;
+    const pwd = req.body.pwd;
+
+    // User.findOne({ where: { username: username, hashedPwd: pwd}})
+    //     .then(data => {
+    //         res.status(200).send(data);
+    //     })
+    //     .catch(err => {
+    //         res.status(500).send({
+    //             message: err.message || "Some error while getting all Users."
+    //         });
+    //     });
+
+    const potentialUser = await User.findOne({ where: { username: username, hashedPwd: pwd}})
+
+    if(potentialUser == null) {
+        res.status(404).send({
+            message: `User with Username: ${username} Does Not Exist.`
+        });
+    } else {
+        res.status(200).send({
+            message: `User with Username: ${username} Exists.`
+        });
+    }
+};
+
 //Retrieve all Users from the database
 exports.findAll = (req, res) => {
     const username = req.body.username;
