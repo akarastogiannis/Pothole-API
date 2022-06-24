@@ -69,17 +69,51 @@ exports.login = async (req, res) => {
     //         });
     //     });
 
-    const potentialUser = await User.findOne({ where: { username: username, hashedPwd: pwd}})
-
+    const potentialUser = await User.findOne({ where: { username: username}})
     if(potentialUser == null) {
+        // Username does not exist
         res.status(404).send({
             message: `User with Username: ${username} Does Not Exist.`
         });
     } else {
-        res.status(200).send({
-            message: `User with Username: ${username} Exists.`
+        // Username does exist
+
+        // Get Registerd User hashedPwd to verify Potential User is Registered User
+        const hashedPwd = potentialUser.hashedPwd;
+
+        // Check pwd with hashedPwd
+        bcrypt.compare(pwd, hashedPwd, function(err, result) {
+            // result == true
+            if(result == true) {
+                // User checks out, welcome the user
+                res.status(200).send({
+                    message: `User with Username: ${username} & Password Exists.`
+                });
+            } else if(result == false) {
+                // User does not check out 
+                res.status(401).send({
+                    message: `User with Username: ${username} Exists But Password is Wrong!`
+                });
+            } else {
+                // Some type of Error
+                res.status(401).send({
+                    message: `User with Username: ${username} Exists But some type of Error occured with Password, Maybe Password is Missing!`
+                });
+            }
         });
     }
+
+    // const potentialUser = await User.findOne({ where: { username: username, hashedPwd: hashedPwd}})
+
+    // if(potentialUser == null) {
+        // res.status(404).send({
+        //     message: `User with Username: ${username} Does Not Exist.`
+        // });
+    // } else {
+    //     res.status(200).send({
+    //         message: `User with Username: ${username} Exists.`
+    //     });
+    // }
 };
 
 //Retrieve all Users from the database
