@@ -1,6 +1,12 @@
+require('dotenv').config()
+
 const db = require('../models');
 const User = db.users;
 const Op = db.sequelize.Op;
+
+// Bcrypt
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 //Create and Save a new User
 exports.create = (req, res) =>  {
@@ -13,24 +19,30 @@ exports.create = (req, res) =>  {
         return;
     }
 
-    // Create the User
-    const user = {
-        fName: req.body.fName,
-        lName: req.body.lName,
-        username: req.body.username,
-        email: req.body.email,
-        hashedPwd: req.body.hashedPwd,
-        dob: req.body.dob
-    }
+    bcrypt.hash(req.body.pwd, saltRounds, function(err, hash) {
+        // Store hash in your password DB.
 
-    // Save the User into the Database
-    User.create(user)
-        .then(data => {
-            res.status(201).send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occured while creating the User."
+        const hashedPwd = hash;
+
+         // Create the User
+        const user = {
+            fName: req.body.fName,
+            lName: req.body.lName,
+            username: req.body.username,
+            email: req.body.email,
+            hashedPwd: hashedPwd,
+            dob: req.body.dob
+        }
+
+        // Save the User into the Database
+        User.create(user)
+            .then(data => {
+                res.status(201).send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occured while creating the User."
+                });
             });
         });
 };
