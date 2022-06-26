@@ -28,7 +28,7 @@ exports.create = (req, res) =>  {
 
         const hashedPwd = hash;
 
-         // Create the User
+        // Create the User
         const user = {
             fName: req.body.fName,
             lName: req.body.lName,
