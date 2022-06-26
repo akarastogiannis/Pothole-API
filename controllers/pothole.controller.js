@@ -35,7 +35,9 @@ exports.create = (req, res) =>  {
             username: req.body.username,
             email: req.body.email,
             hashedPwd: hashedPwd,
-            dob: req.body.dob
+            dob: req.body.dob,
+            verifyCode: req.body.verifyCode,
+            isVerified: req.body.isVerified
         }
 
         // Verify Email Service

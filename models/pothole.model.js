@@ -27,6 +27,14 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             isDate: true,
             allowNull: false
+        },
+        verifyCode: {
+            type: Sequelize.STRING,
+            unique: true
+        },
+        isVerified: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
         }
     });
     return User;
