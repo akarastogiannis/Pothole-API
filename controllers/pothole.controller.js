@@ -8,6 +8,9 @@ const Op = db.sequelize.Op;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+// Nodemailer
+const nodemailer = require("nodemailer");
+
 //Create and Save a new User
 exports.create = (req, res) =>  {
 
@@ -19,6 +22,7 @@ exports.create = (req, res) =>  {
         return;
     }
 
+    // Hash the password and create the user
     bcrypt.hash(req.body.pwd, saltRounds, function(err, hash) {
         // Store hash in your password DB.
 
@@ -34,6 +38,32 @@ exports.create = (req, res) =>  {
             dob: req.body.dob
         }
 
+        // Verify Email Service
+        // var transporter = nodemailer.createTransport({
+        //     service: 'yahoo',
+        //     auth: {
+        //         user: 'potholeapi@yahoo.com',
+        //         pass: '!V!nMVE6RP?zHShHpAEw"5:G7w~E2nt'
+        //     }
+        // });
+
+        // const verifyCode = 12345;
+
+        // var mailOptions = {
+        //     from: 'potholeapi@yahoo.com',
+        //     to: req.body.email,
+        //     subject: 'PotHole API Verify Email',
+        //     text: 'Verification  code ' + verifyCode
+        // };
+
+        // transporter.sendMail(mailOptions, function(error, info){
+        //     if (error) {
+        //       console.log(error);
+        //     } else {
+        //       console.log('Email sent: ' + info.response);
+        //     }
+        // }); 
+
         // Save the User into the Database
         User.create(user)
             .then(data => {
@@ -44,7 +74,8 @@ exports.create = (req, res) =>  {
                     message: err.message || "Some error occured while creating the User."
                 });
             });
-        });
+
+    });
 };
 
 exports.login = async (req, res) => {
