@@ -7,7 +7,7 @@ const Op = db.sequelize.Op;
 // Nodemailer
 const nodemailer = require("nodemailer");
 
-exports.verifyUser = async (req, res) =>  {
+exports.verifyUser = (req, res) =>  {
 
     // Validate the req
     if(!req.body) {
