@@ -1,12 +1,13 @@
 module.exports = app => {
     const users = require('../controllers/pothole.controller');
+    const verifyUsers = require('../controllers/pothole.verifyEmail');
     var router = require("express").Router();
     
     // Create a new User
     router.post("/", users.create);
 
     // verify a new User email
-    router.get("/verify_user:id", users.verifyUser);
+    router.get("/verify_user:id", verifyUsers.verifyUser);
 
     // Login a Existing User
     router.post("/login", users.login);
