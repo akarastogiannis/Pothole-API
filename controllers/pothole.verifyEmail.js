@@ -40,6 +40,12 @@ exports.verifyUser = (req, res) =>  {
 
                                 // email the user the verification code
                                 
+
+
+
+
+                                // check to see if the codes match, if yes turn isVerified to true and set verification code to null,
+                                
                                 res.status(200).send(data);
                             } else {
                                 // The 6 digit vefication code Failed to Save
@@ -72,7 +78,4 @@ exports.verifyUser = (req, res) =>  {
                 message: "Error while getting User id: " + id
             });
         });
-
-
-    // check to see if the codes match, if yes turn isVerified to true and set verification code to null,
 }
