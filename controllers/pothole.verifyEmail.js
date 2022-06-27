@@ -7,7 +7,7 @@ const Op = db.sequelize.Op;
 // Nodemailer
 const nodemailer = require("nodemailer");
 
-exports.verifyUser = (req, res) =>  {
+exports.verifyUser = async (req, res) =>  {
 
     // Validate the req
     if(!req.body) {
@@ -54,10 +54,6 @@ exports.verifyUser = (req, res) =>  {
                                 message: "Error updating User verifyCode with id: " + id
                             });
                         });
-
-
-
-                    res.status(200).send(data);
                 } else {
                     // User is verified, don't procede
                     res.status(403).send({
