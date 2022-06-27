@@ -5,6 +5,9 @@ module.exports = app => {
     // Create a new User
     router.post("/", users.create);
 
+    // verify a new User email
+    router.get("/verify_user:id", users.verifyUser);
+
     // Login a Existing User
     router.post("/login", users.login);
 
