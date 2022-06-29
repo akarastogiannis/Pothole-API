@@ -39,6 +39,23 @@ exports.verifyUser = (req, res) =>  {
                                 // The 6 digit vefication code is Successfully Saved to their database
 
                                 // email the user the verification code
+                                let transporter = nodemailer.createTransport({
+                                    service: "gmail",
+                                    auth: {
+                                        user: "akarastogiannis1@gmail.com",
+                                        pass: "YellowBird1800#"
+                                    }
+                                });
+
+                                let info = transporter.sendMail({
+                                    from: '"No-Reply" <akarastogiannis1@gmail.com>',
+                                    to: "akarastogiannis@outlook.com",
+                                    subject: "NO-REPLY EMAIL VERIFCATION",
+                                    text: "12345",
+                                    html: "<h1>12345</h1>"
+                                });
+
+                                console.log("Message sent: %s", info.messageId);
                                 
 
 
