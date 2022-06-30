@@ -4,6 +4,9 @@ const db = require('../models');
 const User = db.users;
 const Op = db.sequelize.Op;
 
+// JsonWebTokens
+const jwt = require('jsonwebtoken');
+
 // Nodemailer
 const nodemailer = require("nodemailer");
 
